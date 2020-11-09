@@ -10,7 +10,7 @@ namespace project
             {
                 var p = new Parser();
                 Console.WriteLine("Enter path and .ini name:");
-                //"/Users/ant0xak/RiderProjects/lab1/project/"
+                //"/Users/ant0xak/RiderProjects/lab1/project/text.ini"
                 var file = Console.ReadLine();
                 p.ReadInfo(file);
                 Console.WriteLine("Enter section name:");

@@ -33,7 +33,7 @@ namespace project
                     {
                         curSection = lineInfo.Substring(1, lineInfo.Length - 2);
                         if (_data.ContainsKey(curSection))
-                            throw new Exception("Wrong file fromat" + curSection);
+                            throw new Exception("Wrong file format" + curSection);
                         _data.Add(curSection, new List<Cell>());
                         continue;
                     }
@@ -46,41 +46,12 @@ namespace project
                     name = name.Replace("\t", "");
                     value = value.Replace(" ", "");
                     if (curSection=="DEFAULT")
-                        throw new Exception("Wrong file fromat");
+                        throw new Exception("Wrong file format");
                     _data[curSection].Add(new Cell(name, value));
                 }
             }
         }
-
-        private static bool Is<T>(string input)
-        {
-            try
-            {
-                TypeDescriptor.GetConverter(typeof(T)).ConvertFromString(input);
-            }
-            catch
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static T Convert<T>(string input)
-        {
-            try
-            {
-                var converter = TypeDescriptor.GetConverter(typeof(T));
-                if(converter != null)
-                    return (T)converter.ConvertFromString(input);
-                
-                return default(T);
-            }
-            catch (NotSupportedException)
-            {
-                return default(T);
-            }
-        }
+        
 
 
         public T GetValue<T>(string section, string name, string type = "Type")
@@ -92,8 +63,9 @@ namespace project
             {
                 if (c.Name == newname)
                 {
-                    if (Is<T>(c.Value))
-                        return Convert<T>(c.Value);
+                    //if (Is<T>(c.Value))
+                        
+                         return (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromString(c.Value);
                     throw new Exception("Can't cast " + newname + " to type " + type);
                 }
             }
