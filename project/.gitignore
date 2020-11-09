@@ -346,3 +346,4 @@ healthchecksdb
 *.idea.lab1
 bin
 obj
+.idea
